@@ -1,6 +1,7 @@
 package com.invoice.invoiceSystem.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,8 +40,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return invoiceRepository.save(invoice);
 	}
 	@Override
-	public void processOverdueInvoices(Double lateFee, int overdueDays) {
+	public List<Invoice> processOverdueInvoices(Double lateFee, int overdueDays) {
 		List<Invoice> invoices = invoiceRepository.findAll();
+		List<Invoice> invoiceList = new ArrayList<Invoice>();
 		for (Invoice invoice : invoices) {
 			if ("pending".equals(invoice.getStatus()) && invoice.getDueDate().plusDays(overdueDays).isBefore(LocalDate.now())) {
 				if (invoice.getPaidAmount() > 0) {
@@ -56,8 +58,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 					newInvoice.setDueDate(LocalDate.now().plusDays(overdueDays));
 					invoiceRepository.save(newInvoice);
 				}
-				invoiceRepository.save(invoice);
+				invoiceList.add(invoice);
 			}
 		}
+		return invoiceList;
 	}
 }

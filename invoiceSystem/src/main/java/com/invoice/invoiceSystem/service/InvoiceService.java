@@ -12,7 +12,7 @@ public interface InvoiceService {
 
 	List<Invoice> getAllInvoices();
 
-	void processOverdueInvoices(Double lateFee, int overdueDays);
+	List<Invoice> processOverdueInvoices(Double lateFee, int overdueDays);
 
 	Invoice makePayment(Long id, Double paymentAmount);
 

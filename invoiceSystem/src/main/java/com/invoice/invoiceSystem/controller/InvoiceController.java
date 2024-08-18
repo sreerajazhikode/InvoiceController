@@ -2,6 +2,7 @@ package com.invoice.invoiceSystem.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +27,7 @@ public class InvoiceController {
 	@PostMapping
     public ResponseEntity<?> createInvoice(@RequestBody InvoiceRequest invoiceRequest) {
         Invoice invoice = invoiceService.createInvoice(invoiceRequest.getAmount(), invoiceRequest.getDueDate());
-        return ResponseEntity.status(201).body(new InvoiceResponse(invoice.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new InvoiceResponse(invoice.getId()));
     }
 
     @GetMapping
@@ -40,8 +41,8 @@ public class InvoiceController {
     }
 
     @PostMapping("/process-overdue")
-    public ResponseEntity<?> processOverdueInvoices(@RequestBody ProcessOverdueRequest request) {
-        invoiceService.processOverdueInvoices(request.getLateFee(), request.getOverdueDays());
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<Invoice>> processOverdueInvoices(@RequestBody ProcessOverdueRequest request) {
+        List<Invoice> invoiceList = invoiceService.processOverdueInvoices(request.getLateFee(), request.getOverdueDays());
+        return ResponseEntity.ok(invoiceList);
     }
 }
