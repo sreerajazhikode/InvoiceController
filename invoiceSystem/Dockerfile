@@ -2,10 +2,7 @@
 FROM openjdk:17-jdk-slim
 
 # Set the working directory in the container
-WORKDIR /app
+VOLUME /tmp
 
-# Copy the packaged jar file into the container
-COPY target/invoice-system.jar invoice-system.jar
-
-# Run the jar file
-ENTRYPOINT ["java", "-jar", "invoice-system.jar"]
+COPY target/invoiceSystem-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
