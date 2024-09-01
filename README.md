@@ -16,3 +16,6 @@ Build the docker image using command docker build:
 
 Once the image is built, you can run it using the docker run command:
 docker run -p 8080:8080 my-docker-image
+
+for documentation swagger is also configured, and you can see locally at 
+http://localhost:8080/swagger-ui.html
