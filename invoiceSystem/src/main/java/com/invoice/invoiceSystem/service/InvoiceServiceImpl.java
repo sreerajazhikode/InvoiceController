@@ -18,7 +18,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public Invoice createInvoice(Double amount, LocalDate dueDate) {
 		Invoice invoice = new Invoice();
 		invoice.setAmount(amount);
-		invoice.setDueDate(dueDate);
+		invoice.setDueDate(dueDate!=null?dueDate:LocalDate.now().plusDays(10));
 		return invoiceRepository.save(invoice);
 	}
 	@Override
