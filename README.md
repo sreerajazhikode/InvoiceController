@@ -11,8 +11,8 @@ Maven 3.6+ installed and in PATH.
 Do maven clean install using command :
 mvn clean install
 
-Build the docker image using command docker build:
--t my-docker-image .
+Build the docker image using command 
+docker build -t my-docker-image .
 
 Once the image is built, you can run it using the docker run command:
 docker run -p 8080:8080 my-docker-image
